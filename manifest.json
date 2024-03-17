@@ -3,12 +3,12 @@
     "short_name": "Blink Reminder",
     "icons": [
         {
-            "src": "icon.png",
-            "sizes": "192x192",
+            "src": "/anteior-icon.png",
+            "sizes": "512x512",
             "type": "image/png"
         },
         {
-            "src": "icon-512.png",
+            "src": "/anteior-icon.png",
             "sizes": "512x512",
             "type": "image/png"
         }
@@ -16,5 +16,8 @@
     "start_url": "/index.html",
     "display": "standalone",
     "background_color": "#ffffff",
-    "theme_color": "#ffffff"
+    "theme_color": "#ffffff",
+    "permissions": [
+        "notifications"
+    ]
 }
