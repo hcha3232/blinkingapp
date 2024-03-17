@@ -3,12 +3,14 @@
     "short_name": "Blink Reminder",
     "icons": [
         {
+            "purpose": "maskable",
             "src": "/anteior-icon.png",
             "sizes": "512x512",
             "type": "image/png"
         },
         {
-            "src": "/anteior-icon.png",
+            "purpose": "any",
+            "src": "/144.png",
             "sizes": "512x512",
             "type": "image/png"
         }
