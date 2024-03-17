@@ -23,8 +23,12 @@
   <div>
     <button id="stopBtn">Stop Reminder</button>
   </div>
+
+  <div>
+    <button id="notifyButton">Notification Test</button>
+  </div>
   
-  <script src="app.js"></script>
+  <!--script src="app.js"></script-->
   <script>
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/service-worker.js')
@@ -35,6 +39,28 @@
                 console.error('Service Worker registration failed:', error);
             });
     }
+    </script>
+
+    <script>
+      const notifyBtn = document.getElementById('notifyButton')
+      notifyBtn.addEventListener('click', ()=> {
+        if (Notification.permission == "granted") {
+          let notification = new Notification('Test Notification', {
+            body: 'This is a test notification.',
+            icon: '/anterior-icon.png'
+          });
+        } else if (Notification.permission != 'denied') {
+          Notification.requestPermission().then(function(permission) {
+          if (permission === 'granted') {
+            // If permission is granted after requesting, create a new notification
+            var notification = new Notification('Test Notification', {
+              body: 'This is a test notification.',
+              icon: '/anterior-icon.png' // URL to your notification icon
+            });
+          }
+          })
+        }
+      })
     </script>
 
 </body>
