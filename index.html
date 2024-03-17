@@ -51,9 +51,6 @@
             icon: '/anterior-icon.png'
           });
 
-          if ('setAppBadgeNumber' in navigator && typeof navigator.setAppBadge === 'function') {
-            navigator.setAppBadge(1);
-          }
         } else if (Notification.permission != 'denied') {
           Notification.requestPermission().then(function(permission) {
           if (permission === 'granted') {
@@ -62,10 +59,6 @@
               body: 'This is a test notification.',
               icon: '/anterior-icon.png' // URL to your notification icon
             });
-
-            if ('setAppBadgeNumber' in navigator && typeof navigator.setAppBadge === 'function') {
-              navigator.setAppBadge(1);
-            }
           }
           })
         }
