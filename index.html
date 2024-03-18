@@ -12,13 +12,13 @@
 <body>
   <h1>Blink Reminder</h1>
   <div>
-    <label for="interval">Set Reminder Interval (in seconds):</label>
+    <label for="interval">Set Reminder Interval (in minutes):</label>
     <input type="number" id="interval" min="1" required>
     <button id="setIntervalBtn">Set Interval</button>
   </div>
 
   <div>
-    <p>Your interval is <span id="changeInt">X</span> seconds</p>
+    <p>Your interval is <span id="changeInt">X</span> minutes</p>
   </div>
 
   <div>
@@ -29,7 +29,7 @@
     <button id="notifyButton">Notification Test</button>
   </div>
   
-  <!--script src="app.js"></script-->
+  <script src="app.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/service-worker.js')
