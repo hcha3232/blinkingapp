@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+/*document.addEventListener('DOMContentLoaded', () => {
     const intervalInput = document.getElementById('interval');
     const setIntervalBtn = document.getElementById('setIntervalBtn');
     const stopBtn = document.getElementById('stopBtn');
@@ -101,4 +101,4 @@ function showReminderNotification() {
             }
         });
     }
-}
+}*/

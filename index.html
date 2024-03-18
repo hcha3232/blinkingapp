@@ -29,7 +29,7 @@
     <button id="notifyButton">Notification Test</button>
   </div>
   
-  <!--script src="app.js"></script-->
+  <script src="app.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/service-worker.js')
@@ -43,26 +43,31 @@
     </script>
 
     <script>
-      const notifyBtn = document.getElementById('notifyButton')
-      notifyBtn.addEventListener('click', ()=> {
-        if (Notification.permission == "granted") {
-          let notification = new Notification('Test Notification', {
-            body: 'This is a test notification.',
-            icon: '/anterior-icon.png'
-          });
-
-        } else if (Notification.permission != 'denied') {
-          Notification.requestPermission().then(function(permission) {
-          if (permission === 'granted') {
-            // If permission is granted after requesting, create a new notification
-            var notification = new Notification('Test Notification', {
-              body: 'This is a test notification.',
-              icon: '/anterior-icon.png' // URL to your notification icon
-            });
-          }
-          })
+      notifyBtn.addEventListener('click', () => {
+  if ('Notification' in window) {
+    if (Notification.permission === 'granted') {
+      registerAndShowNotification();
+    } else if (Notification.permission !== 'denied') {
+      Notification.requestPermission().then(permission => {
+        if (permission === 'granted') {
+          registerAndShowNotification();
         }
-      })
+      });
+    }
+  } else {
+    console.log('Notifications not supported in this browser.');
+  }
+});
+
+function registerAndShowNotification() {
+  navigator.serviceWorker.register('/service-worker.js')
+    .then(registration => {
+      registration.showNotification('Notification');
+    })
+    .catch(error => {
+      console.error('Service Worker registration failed:', error);
+    });
+}
     </script>
 
 </body>
