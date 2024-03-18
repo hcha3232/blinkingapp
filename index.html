@@ -24,9 +24,10 @@
   <div>
     <button id="stopBtn">Stop Reminder</button>
   </div>
+  <br><br>
 
   <div>
-    <button id="notifyButton">Notification Test</button>
+    <button id="Subscribe">Subscribe</button>
   </div>
   
   <script src="app.js"></script>
@@ -43,7 +44,7 @@
     </script>
 
     <script>
-      const notifyBtn = document.getElementById('notifyButton')
+      const notifyBtn = document.getElementById('Subscribe')
       notifyBtn.addEventListener('click', ()=> {
         if (Notification.permission == "granted") {
           registerAndShowNotification()
@@ -53,21 +54,21 @@
           Notification.requestPermission().then(function(permission) {
           if (permission === 'granted') {
             // If permission is granted after requesting, create a new notification
-            registerAndShowNotification()
+            //registerAndShowNotification()
           }
           })
         }
       })
 
-      function registerAndShowNotification() {
+      /*function registerAndShowNotification() {
         navigator.serviceWorker.register('/service-worker.js')
           .then(registration => {
-            registration.showNotification('Notification');
+            registration.showNotification('Blink!');
           })
           .catch(error => {
             console.error('Service Worker registration failed:', error);
           });
-      }
+      }*/
     </script>
 
 </body>

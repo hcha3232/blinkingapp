@@ -19,6 +19,17 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        if (Notification.permission == "granted") {
+            registerAndShowNotification();
+        } else if (Notification.permission != 'denied') {
+            Notification.requestPermission().then(function(permission) {
+                if (permission === 'granted') {
+                    // If permission is granted after requesting, create a new notification
+                    registerAndShowNotification();
+                }
+            });
+        }
+
         // Store the interval locally
         localStorage.setItem('reminderInterval', intervalMinutes);
         alert(`Reminder interval set to ${intervalMinutes} minutes.`);
@@ -66,6 +77,7 @@ function scheduleReminderNotification(intervalMinutes) {
         showReminderNotification();
     }, intervalMinutes * 60 * 1000); // Convert minutes to milliseconds
 }
+
 function showReminderNotification() {
     if (Notification.permission == "granted") {
         registerAndShowNotification();
@@ -80,14 +92,11 @@ function showReminderNotification() {
 }
 
 function registerAndShowNotification() {
-    navigator.serviceWorker.register('/service-worker.js')
-        .then(registration => {
-            registration.showNotification('Reminder', {
-                body: 'Time to blink!',
-                icon: '/path/to/reminder-icon.png'
-            });
-        })
-        .catch(error => {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(registration => {
+            registration.showNotification('Blink!');
+          })
+          .catch(error => {
             console.error('Service Worker registration failed:', error);
-        });
+          });
 }
