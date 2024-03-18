@@ -1,4 +1,4 @@
-/*document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
     const intervalInput = document.getElementById('interval');
     const setIntervalBtn = document.getElementById('setIntervalBtn');
     const stopBtn = document.getElementById('stopBtn');
@@ -13,19 +13,19 @@
     }
 
     setIntervalBtn.addEventListener('click', () => {
-        const interval = parseInt(intervalInput.value);
-        if (isNaN(interval) || interval <= 0) {
+        const intervalMinutes = parseInt(intervalInput.value);
+        if (isNaN(intervalMinutes) || intervalMinutes <= 0) {
             alert('Please enter a valid interval (greater than 0).');
             return;
         }
 
         // Store the interval locally
-        localStorage.setItem('reminderInterval', interval);
-        alert(`Reminder interval set to ${interval} seconds.`);
+        localStorage.setItem('reminderInterval', intervalMinutes);
+        alert(`Reminder interval set to ${intervalMinutes} minutes.`);
 
         // Calculate next notification timestamp
         const currentTime = Date.now();
-        nextNotificationTimestamp = currentTime + interval * 1000;
+        nextNotificationTimestamp = currentTime + intervalMinutes * 60 * 1000;
         localStorage.setItem('nextNotificationTimestamp', nextNotificationTimestamp);
 
         // Clear previous interval, if any
@@ -33,10 +33,10 @@
             clearInterval(notificationInterval);
         }
         // Schedule new interval
-        notificationInterval = scheduleReminderNotification(interval);
+        notificationInterval = scheduleReminderNotification(intervalMinutes);
     });
 
-    stopBtn.addEventListener('click', ()=> {
+    stopBtn.addEventListener('click', () => {
         console.log("stopped!", notificationInterval)
         if (notificationInterval != null) {
             clearInterval(notificationInterval);
@@ -60,45 +60,34 @@
     }
 });
 
-function scheduleReminderNotification(interval) {
+function scheduleReminderNotification(intervalMinutes) {
     return setInterval(() => {
         console.log("Reminder notification triggered");
         showReminderNotification();
-    }, interval * 1000);
+    }, intervalMinutes * 60 * 1000); // Convert minutes to milliseconds
 }
-
 function showReminderNotification() {
-    if (!('Notification' in window)) {
-        console.log('This browser does not support notifications');
-        return;
-    }
-
-    // Check if the user has granted permission to show notifications
-    if (Notification.permission === 'granted') {
-        // Create and display the reminder notification
-        const notification = new Notification('Blink Reminder', {
-            body: 'Don\'t forget to blink!',
-            // Provide the path to your notification icon
-        });
-
-        // Optionally, add event listeners to handle user interaction with the notification
-        notification.onclick = () => {
-            // Handle click on the notification (e.g., open the PWA)
-            window.focus(); // Bring the browser window to focus
-        };
-
-        notification.onclose = () => {
-            // Handle close of the notification
-            console.log('Reminder notification closed');
-        };
-
-    } else if (Notification.permission !== 'denied') {
-        // Request permission from the user to show notifications
-        Notification.requestPermission().then(permission => {
+    if (Notification.permission == "granted") {
+        registerAndShowNotification();
+    } else if (Notification.permission != 'denied') {
+        Notification.requestPermission().then(function(permission) {
             if (permission === 'granted') {
-                // Permission granted, show the notification
-                showReminderNotification();
+                // If permission is granted after requesting, create a new notification
+                registerAndShowNotification();
             }
         });
     }
-}*/
+}
+
+function registerAndShowNotification() {
+    navigator.serviceWorker.register('/service-worker.js')
+        .then(registration => {
+            registration.showNotification('Reminder', {
+                body: 'Time to blink!',
+                icon: '/path/to/reminder-icon.png'
+            });
+        })
+        .catch(error => {
+            console.error('Service Worker registration failed:', error);
+        });
+}
