@@ -12,7 +12,7 @@
 <body>
   <h1>Blink Reminder</h1>
   <div>
-    <label for="interval">Set Reminder Interval (in minutes):</label>
+    <label for="interval">Set Reminder Interval (in seconds):</label>
     <input type="number" id="interval" min="1" required>
     <button id="setIntervalBtn">Set Interval</button>
   </div>
@@ -46,9 +46,7 @@
       const notifyBtn = document.getElementById('Subscribe')
       notifyBtn.addEventListener('click', ()=> {
         if (Notification.permission == "granted") {
-          registerAndShowNotification()
-
-
+            alert("already subscribed")
         } else if (Notification.permission != 'denied') {
           Notification.requestPermission().then(function(permission) {
           if (permission === 'granted') {

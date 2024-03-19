@@ -11,15 +11,19 @@
         intervalInput.value = storedInterval;
     }
 
+    let intervalId;
+
     setIntervalBtn.addEventListener('click', () => {
         const intervalMinutes = parseInt(intervalInput.value);
+
         if (isNaN(intervalMinutes) || intervalMinutes <= 0) {
             alert('Please enter a valid interval (greater than 0).');
             return;
         }
         else if (Notification.permission == "granted") {
             localStorage.setItem('reminderInterval', intervalMinutes);
-            scheduleReminderNotification(intervalMinutes);
+            clearInterval(intervalId)
+            intervalId = scheduleReminderNotification(intervalMinutes);
             alert(`Reminder interval set to ${intervalMinutes} seconds.`);
         }
         else if (Notification.permission != 'denied') {
