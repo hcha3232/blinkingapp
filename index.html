@@ -29,8 +29,7 @@
   <div>
     <button id="Subscribe">Subscribe</button>
   </div>
-  
-  <script src="app.js"></script>
+
   <script>
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/service-worker.js')
@@ -60,16 +59,8 @@
         }
       })
 
-      /*function registerAndShowNotification() {
-        navigator.serviceWorker.register('/service-worker.js')
-          .then(registration => {
-            registration.showNotification('Blink!');
-          })
-          .catch(error => {
-            console.error('Service Worker registration failed:', error);
-          });
-      }*/
     </script>
+    <script src="app.js"></script>
 
 </body>
 </html>
