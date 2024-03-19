@@ -2,11 +2,13 @@
 
 self.addEventListener('install', event => {
     event.waitUntil(
-        caches.open('blink-reminder-v1').then(cache => {
+        caches.open('blink-reminder-v2').then(cache => {
             return cache.addAll([
                 '/index.html',
                 '/style.css',
-                '/anterior-icon.png'
+                '/anterior-icon.png',
+                './app.js',
+                './manifest.json'
                 // Add more files to cache as needed
             ]);
         })
