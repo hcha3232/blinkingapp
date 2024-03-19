@@ -18,26 +18,23 @@
             alert('Please enter a valid interval (greater than 0).');
             return;
         }
-
-        alert(`Reminder interval set to ${intervalMinutes} minutes.`);
-        scheduleReminderNotification(intervalMinutes);
+        else if (Notification.permission != 'denied') {
+            alert('Please subscribe');
+        }
+        else if (Notification.permission == "granted") {
+            scheduleReminderNotification(intervalMinutes);
+            alert(`Reminder interval set to ${intervalMinutes} minutes.`);
+        }
     });
 
 
 function scheduleReminderNotification(intervalMinutes) {
     return setInterval(() => {
         console.log("Reminder notification triggered");
-        showReminderNotification();
-    }, intervalMinutes * 1000); // Convert minutes to milliseconds
+        registerAndShowNotification();
+    }, intervalMinutes * 60 * 1000); // Convert minutes to milliseconds
 }
 
-function showReminderNotification() {
-    if (Notification.permission == "granted") {
-        registerAndShowNotification();
-    } else if (Notification.permission != 'denied') {
-        alert("Please subscribe")
-    }
-}
 
 function registerAndShowNotification() {
         navigator.serviceWorker.register('/service-worker.js')
